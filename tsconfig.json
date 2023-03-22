@@ -15,9 +15,9 @@
         "baseUrl": ".",
         "paths": {
             "@/database/*": ["app/database/*"],
-            "@/routes/*": ["app/routes/*"],            
-          }, 
+            "@/routes/*": ["app/routes/*"]
+        }
     },
-    "include": ["./app/**/*", ".env", "./database/**/*"],
+    "include": ["./app/**/*", ".env", "./database/**/*", "./routes/**/*"],
     "exclude": ["node_modules", "**/*.test.ts"]
 }

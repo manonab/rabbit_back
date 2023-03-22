@@ -4,13 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const database_1 = __importDefault(require("./database"));
+const food_1 = __importDefault(require("./routes/food"));
+const rabbits_1 = __importDefault(require("./routes/rabbits"));
+const users_1 = __importDefault(require("./routes/users"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const app = (0, express_1.default)();
-app.get("/users", async (req, res) => {
-    const [rows, fields] = await database_1.default.execute("SELECT * FROM users");
-    res.json(rows);
-});
-app.listen(3000, () => {
-    console.log("Server listening on port 3000");
+const port = 3000;
+app.use(body_parser_1.default.json());
+app.use(users_1.default);
+app.use(rabbits_1.default);
+app.use(food_1.default);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
 //# sourceMappingURL=index.js.map
