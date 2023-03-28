@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const database_1 = __importDefault(require("../../database"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+require('dotenv').config();
 const authRouter = express_1.default.Router();
 authRouter.post('/signin', async (req, res) => {
     // extract email and password from request body
@@ -15,10 +16,11 @@ authRouter.post('/signin', async (req, res) => {
         const [result, _] = await database_1.default.execute('SELECT * FROM users WHERE email = ?', [email]);
         if (result.length === 1) {
             const user = result[0];
+            const accessToken = jsonwebtoken_1.default.sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET ?? 'default_secret');
             const passwordMatch = await bcrypt_1.default.compare(password, user.password);
             if (passwordMatch) {
                 // if valid, send success message
-                res.status(200).json({ message: 'Sign in successful', user_id: user.id });
+                res.status(200).json({ message: 'Sign in successful', user_id: user.id, user_token: accessToken });
             }
             else {
                 // if invalid, send error message

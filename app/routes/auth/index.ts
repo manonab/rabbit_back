@@ -3,6 +3,8 @@ import pool from '../../database';
 import { FieldPacket, RowDataPacket, ResultSetHeader } from "mysql2";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+require('dotenv').config();
+
 const authRouter: Router = express.Router();
 
 authRouter.post('/signin', async (req: Request, res: Response) => {
@@ -16,11 +18,11 @@ authRouter.post('/signin', async (req: Request, res: Response) => {
         
         if (result.length === 1) {
           const user = result[0];
-
+          const accessToken = jwt.sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET ?? 'default_secret');
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (passwordMatch) {
             // if valid, send success message
-            res.status(200).json({ message: 'Sign in successful', user_id: user.id });
+            res.status(200).json({ message: 'Sign in successful', user_id: user.id , user_token:accessToken});
           } else {
             // if invalid, send error message
             res.status(401).json({ message: 'Invalid email or password' });
@@ -70,7 +72,5 @@ authRouter.post("/sign_up", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 export default authRouter;
-
-
-

@@ -13,11 +13,13 @@
         "noImplicitAny": true,
         "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
-        "paths": {
-            "@/database/*": ["app/database/*"],
-            "@/routes/*": ["app/routes/*"]
-        }
     },
-    "include": ["./app/**/*", ".env", "./database/**/*", "./routes/**/*"],
+    "include": [
+        "./app/**/*",
+        ".env",
+        "./database/**/*",
+        "./routes/**/*",
+        "./utils/**/*"
+    ],
     "exclude": ["node_modules", "**/*.test.ts"]
 }

@@ -1,9 +1,11 @@
 import express from 'express';
-import foodRouter from './routes/food';
-import rabbitRouter from './routes/rabbits';
-import usersRouter from './routes/users';
 import bodyParser from 'body-parser';
+import usersRouter from './routes/users';
+import rabbitRouter from './routes/rabbits';
+import foodRouter from './routes/food';
 import authRouter from './routes/auth';
+
+
 
 const app = express();
 const port = 3000;
